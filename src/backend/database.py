@@ -37,6 +37,21 @@ def init_database():
         },
         {"$set": {"description": initial_activities["Manga Maniacs"]["description"]}}
     )
+    activities_collection.update_one(
+        {
+            "_id": "Manga Maniacs",
+            "schedule": "Tuesdays at 7pm",
+            "schedule_details": {"days": ["Tuesday"], "start_time": "19:00"}
+        },
+        {"$set": {
+            "schedule": initial_activities["Manga Maniacs"]["schedule"],
+            "schedule_details": initial_activities["Manga Maniacs"]["schedule_details"]
+        }}
+    )
+    activities_collection.update_one(
+        {"_id": "Manga Maniacs", "max_participants": 15},
+        {"$set": {"max_participants": initial_activities["Manga Maniacs"]["max_participants"]}}
+    )
 
     # Initialize teacher accounts if empty
     if teachers_collection.count_documents({}) == 0:
@@ -47,12 +62,12 @@ def init_database():
 initial_activities = {
     "Manga Maniacs": {
         "description": "Dive into the vibrant worlds of Japanese manga! Discover unforgettable characters, epic adventures, and stories to share with fellow fans.",
-        "schedule": "Tuesdays at 7pm",
+        "schedule": "Tuesdays at 5pm",
         "schedule_details": {
             "days": ["Tuesday"],
-            "start_time": "19:00"
+            "start_time": "17:00"
         },
-        "max_participants": 15,
+        "max_participants": 25,
         "participants": []
     },
     "Chess Club": {
