@@ -30,6 +30,13 @@ def init_database():
         {"$setOnInsert": initial_activities["Manga Maniacs"]},
         upsert=True
     )
+    activities_collection.update_one(
+        {
+            "_id": "Manga Maniacs",
+            "description": "Explore the fantastic stories of the most interesting characters from Japanese Manga (graphic novels)."
+        },
+        {"$set": {"description": initial_activities["Manga Maniacs"]["description"]}}
+    )
 
     # Initialize teacher accounts if empty
     if teachers_collection.count_documents({}) == 0:
@@ -39,7 +46,7 @@ def init_database():
 # Initial database if empty
 initial_activities = {
     "Manga Maniacs": {
-        "description": "Explore the fantastic stories of the most interesting characters from Japanese Manga (graphic novels).",
+        "description": "Dive into the vibrant worlds of Japanese manga! Discover unforgettable characters, epic adventures, and stories to share with fellow fans.",
         "schedule": "Tuesdays at 7pm",
         "schedule_details": {
             "days": ["Tuesday"],
